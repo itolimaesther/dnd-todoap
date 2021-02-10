@@ -14,7 +14,7 @@ function Cards({ items }) {
                 <h3> {elem.title} </h3>
 
                 <div>
-                  {elem.item.map((el, idx) => {
+                  {elem.items.map((el, idx) => {
                     return (
                       <div
                         className="bg-white rounded-md border p-2 mb-5"

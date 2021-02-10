@@ -2,27 +2,18 @@ import React, { useState } from "react";
 import Cards from "./Components/Cards";
 
 function App() {
-  // todo:{
-  //   title: "Todo",
-  //   item: [
-  //     "This is my first task"
-  //   ]
-  // },
-
-  const [items, setItems] = useState([
-    {
-      title: "Todo",
-      item: ["This is my first task"],
-    },
-    {
-      title: "In Progress",
-      item: [],
-    },
-    {
-      title: "Completed",
-      item: [],
-    },
-  ]);
+  const [todos, setTodos] = useState({
+    title: "Todo",
+    items: ["First Todo"],
+  });
+  const [inProgress, setInprogress] = useState({
+    title: "In Progress",
+    items: ["In progress"],
+  });
+  const [completed, setCompleted] = useState({
+    title: "Completed",
+    items: ["completed"],
+  });
 
   const [showInput, setShowInput] = useState(false);
   const [text, setText] = useState("");
@@ -37,39 +28,33 @@ function App() {
     e.preventDefault();
 
     // update the items in Todo
-    const tempItems = items;
-    tempItems[0].item.push(text);
-
-    setItems(tempItems);
-
+    setTodos((prevTodos) => ({ items: [...prevTodos.items, text] }));
     setShowInput(false);
     setText("");
   };
 
   // Show the input form
-  let input;
-  if (showInput) {
-    input = (
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col bg-white w-auto h-50 p-10 mt-5 "
+
+  const input = (
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col bg-white w-auto h-50 p-10 mt-5 "
+    >
+      <input
+        value={text}
+        onChange={textHandler}
+        type="text"
+        placeholder="New task"
+        className="border p-2 mb-4 "
+      />
+      <button
+        type="submit"
+        className="bg-blue-400 w-20 font-bold text-white font-bold py-2 px-4 rounded"
       >
-        <input
-          value={text}
-          onChange={textHandler}
-          type="text"
-          placeholder="New task"
-          className="border p-2 mb-4 "
-        />
-        <button
-          type="submit"
-          className="bg-blue-400 w-20 font-bold text-white font-bold py-2 px-4 rounded"
-        >
-          Add
-        </button>
-      </form>
-    );
-  }
+        Add
+      </button>
+    </form>
+  );
 
   return (
     <div className="container-wrap w-full h-screen bg-purple-800">
@@ -81,15 +66,14 @@ function App() {
           >
             Add Task
           </button>
-          {input}
+          {showInput && input}
         </div>
       </div>
 
       <div className="bg-white w-4/5 h-4/5 rounded mx-auto p-5">
-        <Cards setItems={setItems} items={items} />
+        <Cards items={[todos, inProgress, completed]} />
       </div>
     </div>
   );
 }
-
 export default App;
