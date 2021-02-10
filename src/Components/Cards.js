@@ -1,38 +1,34 @@
 import React from "react";
 
-
-function Cards({items}) {
-
-  
-
+function Cards({ items }) {
   return (
     <div className="items-center justify-center flex">
       {items.map((elem, index) => {
         return (
-          <div className="grid grid-cols-1 w-full mr-5 sm:grid-cols-3 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 gap-5" key={index}>
-          <div className="bg-gray-200 rounded overflow-hidden" >
+          <div
+            className="grid grid-cols-1 w-full mr-5 sm:grid-cols-3 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 gap-5"
+            key={index}
+          >
+            <div className="bg-gray-200 rounded overflow-hidden">
               <div className="px-6 py-4">
                 <h3> {elem.title} </h3>
-                {console.log(elem.item)}
 
                 <div>
                   {elem.item.map((el, idx) => {
                     return (
-                      <div className="bg-white rounded-md border p-2 mb-5" key={idx}>
+                      <div
+                        className="bg-white rounded-md border p-2 mb-5"
+                        key={idx}
+                      >
                         <ul>
                           <li>{el}</li>
                         </ul>
                       </div>
-                    )
+                    );
                   })}
                 </div>
-
-
-
               </div>
-              
             </div>
-
           </div>
         );
       })}
@@ -40,16 +36,7 @@ function Cards({items}) {
   );
 }
 
-
 export default Cards;
-
-
-
-
-
-
-
-
 
 // import React, { useState } from "react";
 // // import Todo from "./Todo";
