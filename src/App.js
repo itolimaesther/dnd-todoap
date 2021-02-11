@@ -2,17 +2,12 @@ import React, { useState } from "react";
 import Cards from "./Components/Cards";
 
 function App() {
-  // todo:{
-  //   title: "Todo",
-  //   item: [
-  //     "This is my first task"
-  //   ]
-  // },
+
 
   const [items, setItems] = useState([
     {
       title: "Todo",
-      item: ["This is my first task"],
+      item: [],
     },
     {
       title: "In Progress",
@@ -41,7 +36,6 @@ function App() {
     tempItems[0].item.push(text);
 
     setItems(tempItems);
-
     setShowInput(false);
     setText("");
   };
@@ -70,6 +64,10 @@ function App() {
       </form>
     );
   }
+
+
+
+  
 
   return (
     <div className="container-wrap w-full h-screen bg-purple-800">
