@@ -13,7 +13,7 @@ function Cards({ items, setItems}) {
   }
 
   
-  const onDrop = (e)=> {
+  const onDrop = (e, e.target)=> {
     let id = e.dataTransfer.getData("index")
     
    
