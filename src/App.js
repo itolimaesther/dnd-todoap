@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Cards from "./Components/Cards";
 
 function App() {
+
   const [todos, setTodos] = useState({
     title: "Todo",
     items: ["First Todo"],
@@ -14,6 +15,7 @@ function App() {
     title: "Completed",
     items: ["completed"],
   });
+
 
   const [showInput, setShowInput] = useState(false);
   const [text, setText] = useState("");
@@ -28,7 +30,9 @@ function App() {
     e.preventDefault();
 
     // update the items in Todo
+
     setTodos((prevTodos) => ({ items: [...prevTodos.items, text] }));
+    
     setShowInput(false);
     setText("");
   };
@@ -55,6 +59,10 @@ function App() {
       </button>
     </form>
   );
+
+
+
+  
 
   return (
     <div className="container-wrap w-full h-screen bg-purple-800">
