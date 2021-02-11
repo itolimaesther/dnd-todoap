@@ -79,7 +79,7 @@ function App() {
       </div>
 
       <div className="bg-white w-4/5 h-4/5 rounded mx-auto p-5">
-        <Cards items={[todos, inProgress, completed]} />
+        <Cards items={[todos, inProgress, completed]} text={text} progress={setInprogress} completed={setCompleted} />
       </div>
     </div>
   );

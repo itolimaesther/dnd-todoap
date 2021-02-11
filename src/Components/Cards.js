@@ -1,25 +1,34 @@
 import React from "react";
 
-function Cards({ items, setItems}) {
+function Cards({ items, progress, completed}) {
 
 
   const onDragOver = (e)=> {
     e.preventDefault();
   }
 
+//   The item you are dragging
   const onDragStart = (e, index) => {
       console.log("dragstart:", index)
       e.dataTransfer.setData("index", index)
   }
 
-  
-  const onDrop = (e, e.target)=> {
+//   get the item you are dragging and add to another category
+  const onDrop = (e, cat)=> {
     let id = e.dataTransfer.getData("index")
     
+    let itemElement = items.filter((itm) => {
+        // console.log(itm.title)
+        if(itm.items === id){
+            itm.title = cat
+            console.log(cat)
+        }
+        return itm
+    })
+
+    progress((prevTodos) => ({ items: [...prevTodos.items, itemElement] }));
    
   }
-
-
 
 
   return (
@@ -37,7 +46,7 @@ function Cards({ items, setItems}) {
                 elem.title === "In Progress" ? 
                 "bg-orange-400": "bg-green-400"}
                 onDragOver = {(e) => onDragOver(e)}
-                onDrop = {(e) => onDrop(e, e.target, console.log(e.target) )}
+                onDrop = {(e) => onDrop(e, items.inProgress)}
                 >
             
               <div className="px-6 py-4">
