@@ -6,7 +6,11 @@ module.exports = {
     purgeLayersByDefault: true,
   },
   purge: [],
-  theme: {},
+  theme: {
+    inset: {
+     '82': '22rem',
+    }
+  },
     extend: {
   },
   variants: {},
@@ -17,8 +21,20 @@ module.exports = {
           backgroundColor: '#230396',
         }
       }
+
+      const circlePosition = {
+        'circle1':{
+          top: '5%',
+          right: '15%'
+        },
+        'circle2':{
+          top: '5%',
+          right: '10%'
+        }
+      }
       
-      addComponents(bgColor)
+      
+      addComponents(bgColor, circlePosition)
     })
   ],
 }

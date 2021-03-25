@@ -1,82 +1,61 @@
 import React from "react";
+import { Draggable, Droppable } from "react-beautiful-dnd";
+import Card from "./Card";
 
-function Cards({ items, progress, completed}) {
-
-
-  const onDragOver = (e)=> {
-    e.preventDefault();
-  }
-
-//   The item you are dragging
-  const onDragStart = (e, index) => {
-      console.log("dragstart:", index)
-      e.dataTransfer.setData("index", index)
-  }
-
-//   get the item you are dragging and add to another category
-  const onDrop = (e, cat)=> {
-    let id = e.dataTransfer.getData("index")
-    
-    let itemElement = items.filter((itm) => {
-        // console.log(itm.title)
-        if(itm.items === id){
-            itm.title = cat
-            console.log(cat)
-        }
-        return itm
-    })
-
-    progress((prevTodos) => ({ items: [...prevTodos.items, itemElement] }));
-   
-  }
-
-
+function Cards({ data, idx, todos, setTodos }) {
   return (
-    <div className="items-center justify-center flex">
-      {items.map((elem, index) => {
-        return (
-          <div
-            className="grid grid-cols-1 w-full mr-5 sm:grid-cols-3 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 gap-5"
-            key={index}
-          >
-            <div 
-                style={{"borderRadius":"5px"}}
-                className={elem.title === "Todo" ? 
-                "bg-blue-400" : "bg-green-400" && 
-                elem.title === "In Progress" ? 
-                "bg-orange-400": "bg-green-400"}
-                onDragOver = {(e) => onDragOver(e)}
-                onDrop = {(e) => onDrop(e, items.inProgress)}
-                >
-            
-              <div className="px-6 py-4">
-
-                <h3> {elem.title} </h3>
-  
-                <div>
-                  {elem.items.map((el, idx) => {
-                    return (
-                      <div
-                        className="bg-white rounded-md border p-2 mb-5"
-                        key={idx} draggable onDragStart = {(e) => onDragStart(e, el)}
-                      >
-                        <ul>
-                          <li>{el}</li>
-                        </ul>
-                      </div>
-                    );
-                  })}
+    <div className="items-center justify-center w-full" key={idx}>
+      <div
+        className="grid grid-cols-1 w-full mr-0 sm:grid-cols-1 mb-5 sm:mb-5 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1"
+        key={idx}
+      >
+        <h3> {data.title} </h3>
+        <Droppable droppableId={idx}>
+          {(provided) => {
+            return (
+              <div
+                className={`border, mr-5 ${
+                  data.title === "Todo"
+                    ? "bg-blue-400"
+                    : "bg-blue-400" && data.title === "In progress"
+                    ? "bg-yellow-400"
+                    : "bg-green-400"
+                }`}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                <div className="px-6 py-4">
+                  {data.items.map((el, index) => {
+                      return (
+                        <Draggable
+                          key={el.id}
+                          index={index}
+                          draggableId={el.id}
+                        >
+                          {(provided) => {
+                            return (
+                              <div
+                                className="bg-white rounded-md border p-2 mb-5"
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                <Card data={data} todos={todos} setTodos={setTodos} el={el} />
+                              </div>
+                            );
+                          }}
+                        </Draggable>
+                      );
+                    })}
+                    {provided.placeholder}
                 </div>
               </div>
-              
-            </div>
-          </div>
-        );
-      })}
+            );
+          }}
+        </Droppable>
+      </div>
     </div>
   );
 }
 
 export default Cards;
-
-

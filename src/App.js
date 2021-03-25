@@ -1,23 +1,27 @@
 import React, { useState } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+import './index.css'
+import _ from "lodash";
 import Cards from "./Components/Cards";
+import { v4 } from "uuid";
 
 function App() {
-
+  
   const [todos, setTodos] = useState({
-    title: "Todo",
-    items: ["First Todo"],
-  });
-  const [inProgress, setInprogress] = useState({
-    title: "In Progress",
-    items: ["In progress"],
-  });
-  const [completed, setCompleted] = useState({
-    title: "Completed",
-    items: ["completed"],
+    todo: {
+      title: "Todo",
+      items: [],
+    },
+    "in-progress": {
+      title: "In progress",
+      items: [],
+    },
+    done: {
+      title: "Completed",
+      items: [],
+    },
   });
 
-
-  const [showInput, setShowInput] = useState(false);
   const [text, setText] = useState("");
 
   // gets the value of the text from the input
@@ -26,61 +30,95 @@ function App() {
   };
 
   // handling submit
-  const handleSubmit = (e) => {
+  const addItem = (e) => {
     e.preventDefault();
 
     // update the items in Todo
-
-    setTodos((prevTodos) => ({ items: [...prevTodos.items, text] }));
-    
-    setShowInput(false);
+    setTodos((prev) => {
+      return {
+        ...prev,
+        todo: {
+          title: "Todo",
+          items: [
+            {
+              id: v4(),
+              name: text,
+            },
+            ...prev.todo.items,
+          ],
+        },
+      };
+    });
     setText("");
   };
 
-  // Show the input form
+  const handleDragEnd = ({ destination, source }) => {
+    if (!destination) {
+      return;
+    }
 
-  const input = (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col bg-white w-auto h-50 p-10 mt-5 "
-    >
-      <input
-        value={text}
-        onChange={textHandler}
-        type="text"
-        placeholder="New task"
-        className="border p-2 mb-4 "
-      />
-      <button
-        type="submit"
-        className="bg-blue-400 w-20 font-bold text-white font-bold py-2 px-4 rounded"
-      >
-        Add
-      </button>
-    </form>
-  );
+    if (
+      destination.index === source.index &&
+      destination.droppableId === source.droppableId
+    ) {
+      return;
+    }
 
+    // Creating a copy of item before removing from state(todos)
+    const itemCopy = { ...todos[source.droppableId].items[source.index] };
+    setTodos((prev) => {
+      prev = { ...prev };
 
+      // remove from previous items array
+      prev[source.droppableId].items.splice(source.index, 1);
+
+      // Adding to new items array location
+      prev[destination.droppableId].items.splice(
+        destination.index,
+        0,
+        itemCopy
+      );
+
+      return prev;
+    });
+  };
 
   
 
   return (
-    <div className="container-wrap w-full h-screen bg-purple-800">
-      <div className="p-10">
-        <div className="flex flex-col self-end justify-end items-end">
-          <button
-            className="bg-transparent text-white font-bold border border-white-400 py-2 px-4 rounded"
-            onClick={() => setShowInput(!showInput)}
+    <div className="container-wrap w-full h-screen relative bg-gradient-to-r from-purple-800 to-purple-700">
+      <div className="flex flex-col h-screen p-10">
+        <div className="flex flex-col sm:self-center md:self-end sm:justify-center md:justify-end sm:items-end md:items-center">
+          <form
+            onSubmit={addItem}
+            className="flex flex-row bg-white justify-between p-1 rounded mb-5 w-auto"
           >
-            Add Task
-          </button>
-          {showInput && input}
+            <input
+              value={text}
+              onChange={textHandler}
+              type="text"
+              placeholder="Add new task"
+              className="focus:outline-none w-full"
+            />
+            <button
+              type="submit"
+              className="bg-purple-400 font-bold focus:outline-none text-white font-bold py-2 px-4 rounded"
+            >
+              Add
+            </button>
+          </form>
+        </div>
+
+        <div className="wraper sm:w-full md:w-full sm:block md:flex rounded p-5">
+          <DragDropContext onDragEnd={handleDragEnd}>
+            {_.map(todos, (data, idx) => {
+              return <Cards todos={todos} setTodos={setTodos} data={data} key={idx} idx={idx} />;
+            })}
+          </DragDropContext>
         </div>
       </div>
-
-      <div className="bg-white w-4/5 h-4/5 rounded mx-auto p-5">
-        <Cards items={[todos, inProgress, completed]} text={text} progress={setInprogress} completed={setCompleted} />
-      </div>
+      <div className="bg-circle circle1 rounded-full w-80 h-80"></div>
+      <div className="bg-circle circle2 rounded-full w-80 h-80"></div>
     </div>
   );
 }
