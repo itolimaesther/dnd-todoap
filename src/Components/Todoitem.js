@@ -1,17 +1,21 @@
-import React from "react";
+// import React from "react";
 
-function Todoitem({ items }) {
-  return (
-    <div className="bg-white rounded-md border text-center h-10 mb-5">
-      {items.map((el, idx) => {
-        return (
-          <ul>
-            <li key={idx}>{el.task}</li>
-          </ul>
-        );
-      })}
-    </div>
-  );
-}
+// function Todoitem({todos}) {
+//   return (
+//     <div className="bg-white rounded-md border text-center h-10 mb-5 ">
+//           <ul className="flex justify-between p-2">
+//           {
+//             todos.map((todo) => {
+//               return (
+//                 <li>{todo.items}</li>
+//               )
+//             })
+//           }
 
-export default Todoitem;
+//         </ul>
+      
+//     </div>
+//   );
+// }
+
+// export default Todoitem;

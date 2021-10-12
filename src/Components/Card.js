@@ -1,28 +1,25 @@
 import React from "react";
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+// import Todoitem from "./Todoitem";
+// import DeleteIcon from '@material-ui/icons/Delete';
+// import EditIcon from '@material-ui/icons/Edit';
 
-function Card({el, todos, setTodos, data}) {
-
-  // const deleteItem = () => {
-  //   console.log(data)
-  // }
-
-  // console.log(data)
-    
-
-
-
+function Card({todos}) {
 
   return (
-    <div className="bg-gray-50 h-auto mx-auto" key={el.id}>
-        <ul className="flex justify-between">
-            <li>{el.name}</li>
-            <li className="flex justify-between align-middle">
-                <DeleteIcon className="action-btn" />
-                <EditIcon className="action-btn" />
-            </li>
+    <div className="bg-gray-100 h-auto w-100 p-5" >
+      <div className="bg-white rounded-md border text-center h-10 mb-5 ">
+          <ul className="flex justify-between p-2">
+          {
+            todos.map((todo) => {
+              return (
+                <li>{todo.items}</li>
+              )
+            })
+          }
+
         </ul>
+      
+    </div>
     </div>
   );
 }

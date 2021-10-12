@@ -1,86 +1,48 @@
 import React, { useState } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
+// import { DragDropContext } from "react-beautiful-dnd";
 import './index.css'
-import _ from "lodash";
+// import _ from "lodash";
 import Cards from "./Components/Cards";
-import { v4 } from "uuid";
+// import { v4 as uuidV4} from "uuid";
 
 function App() {
+
+  const [input, setInput] = useState("");
   
-  const [todos, setTodos] = useState({
-    todo: {
+  const [todos, setTodos] = useState([
+    {
       title: "Todo",
       items: [],
     },
-    "in-progress": {
+    {
       title: "In progress",
       items: [],
     },
-    done: {
+    {
       title: "Completed",
       items: [],
     },
-  });
-
-  const [text, setText] = useState("");
+  ]);
+  
+    // handling submit
+    const addItem = (e) => {
+      e.preventDefault();
+  
+      let newItems = todos.items
+      
+      if(todos.title === 'Todo'){
+        setTodos(todos => {
+          return[...todos, newItems]
+        });
+      }
+  
+      setInput("")
+  
+    };
 
   // gets the value of the text from the input
-  const textHandler = (e) => {
-    setText(e.target.value);
-  };
-
-  // handling submit
-  const addItem = (e) => {
-    e.preventDefault();
-
-    // update the items in Todo
-    setTodos((prev) => {
-      return {
-        ...prev,
-        todo: {
-          title: "Todo",
-          items: [
-            {
-              id: v4(),
-              name: text,
-            },
-            ...prev.todo.items,
-          ],
-        },
-      };
-    });
-    setText("");
-  };
-
-  const handleDragEnd = ({ destination, source }) => {
-    if (!destination) {
-      return;
-    }
-
-    if (
-      destination.index === source.index &&
-      destination.droppableId === source.droppableId
-    ) {
-      return;
-    }
-
-    // Creating a copy of item before removing from state(todos)
-    const itemCopy = { ...todos[source.droppableId].items[source.index] };
-    setTodos((prev) => {
-      prev = { ...prev };
-
-      // remove from previous items array
-      prev[source.droppableId].items.splice(source.index, 1);
-
-      // Adding to new items array location
-      prev[destination.droppableId].items.splice(
-        destination.index,
-        0,
-        itemCopy
-      );
-
-      return prev;
-    });
+  const InputHandler = (e) => {
+    setInput(e.target.value);
   };
 
   
@@ -94,8 +56,8 @@ function App() {
             className="flex flex-row bg-white justify-between p-1 rounded mb-5 w-auto"
           >
             <input
-              value={text}
-              onChange={textHandler}
+              value={input}
+              onChange={InputHandler}
               type="text"
               placeholder="Add new task"
               className="focus:outline-none w-full"
@@ -110,11 +72,9 @@ function App() {
         </div>
 
         <div className="wraper sm:w-full md:w-full sm:block md:flex rounded p-5">
-          <DragDropContext onDragEnd={handleDragEnd}>
-            {_.map(todos, (data, idx) => {
-              return <Cards todos={todos} setTodos={setTodos} data={data} key={idx} idx={idx} />;
-            })}
-          </DragDropContext>
+
+        <Cards todos={todos} setTodos={setTodos}/>
+          
         </div>
       </div>
       <div className="bg-circle circle1 rounded-full w-80 h-80"></div>
