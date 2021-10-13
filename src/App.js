@@ -2,17 +2,18 @@ import React, { useState } from "react";
 // import { DragDropContext } from "react-beautiful-dnd";
 import './index.css'
 // import _ from "lodash";
-import Cards from "./Components/Cards";
+import Card from "./Components/Card";
 // import { v4 as uuidV4} from "uuid";
 
 function App() {
 
   const [input, setInput] = useState("");
-  
-  const [todos, setTodos] = useState([
+  const [newTodos, setNewTodos] = useState([])
+  // console.log(newTodos, "newwTodos")
+  const todos = [
     {
       title: "Todo",
-      items: [],
+      items: newTodos,
     },
     {
       title: "In progress",
@@ -21,22 +22,32 @@ function App() {
     {
       title: "Completed",
       items: [],
-    },
-  ]);
+    }
+  ]
+  // const [todos, setTodos] = useState([
+    
+
+console.log(todos)
+
+  
   
     // handling submit
     const addItem = (e) => {
       e.preventDefault();
-  
-      let newItems = todos.items
+      setNewTodos([...newTodos, input])
+      // newTodos.push(input)
+// console.log(newTodos)
+      // console.log(todos[0].items)
+      // let newItems = input
+      // console.log(newItems)
       
-      if(todos.title === 'Todo'){
-        setTodos(todos => {
-          return[...todos, newItems]
-        });
-      }
+      // if(todos.title === 'Todo'){
+      //   setTodos(todos => {
+      //     return[...todos, newItems]
+      //   });
+      // }
   
-      setInput("")
+      // setInput("")
   
     };
 
@@ -72,8 +83,23 @@ function App() {
         </div>
 
         <div className="wraper sm:w-full md:w-full sm:block md:flex rounded p-5">
+        <div className="items-center justify-center w-full" >
+      <div
+        className="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-5 sm:mb-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
+      >
+        {
+          todos.map((todo) => {
+            return (
+              <h3>{todo.title}</h3>
+            )
+          })
+        }
 
-        <Cards todos={todos} setTodos={setTodos}/>
+        <Card todos={todos} />
+
+      </div>
+    </div>
+        {/* <Cards newTodos={newTodos} todos={todos} setTodos={setTodos}/> */}
           
         </div>
       </div>

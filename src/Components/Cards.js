@@ -2,7 +2,7 @@ import React from "react";
 import Card from "./Card";
 // import { v4 as uuidV4} from "uuid";
 
-function Cards({todos, setTodos}) {
+function Cards({todos, setTodos, newTodos}) {
  
   return (
     <div className="items-center justify-center w-full" >

@@ -5,17 +5,23 @@ import React from "react";
 
 function Card({todos}) {
 
+  let todo = todos[0]
+  let items = todo.items || []
+  console.log(items, 'check')
+
   return (
     <div className="bg-gray-100 h-auto w-100 p-5" >
       <div className="bg-white rounded-md border text-center h-10 mb-5 ">
-          <ul className="flex justify-between p-2">
-          {
-            todos.map((todo) => {
-              return (
-                <li>{todo.items}</li>
-              )
-            })
-          }
+          <ul className="block justify-between p-2">
+            {
+              items.map(item => {
+                return(
+                  <li>{item}</li>
+                )
+              
+              })
+            }
+          
 
         </ul>
       
@@ -25,3 +31,6 @@ function Card({todos}) {
 }
 
 export default Card;
+
+
+
