@@ -2,14 +2,15 @@ import React, { useState } from "react";
 // import { DragDropContext } from "react-beautiful-dnd";
 import './index.css'
 // import _ from "lodash";
-import Card from "./Components/Card";
-// import { v4 as uuidV4} from "uuid";
+import Todo from "./Components/Todo";
+import Inprogress from "./Components/Inprogress";
+import Complete from "./Components/Complete";
 
 function App() {
 
   const [input, setInput] = useState("");
   const [newTodos, setNewTodos] = useState([])
-  // console.log(newTodos, "newwTodos")
+  
   const todos = [
     {
       title: "Todo",
@@ -24,30 +25,15 @@ function App() {
       items: [],
     }
   ]
-  // const [todos, setTodos] = useState([
     
-
-console.log(todos)
-
   
   
     // handling submit
     const addItem = (e) => {
       e.preventDefault();
       setNewTodos([...newTodos, input])
-      // newTodos.push(input)
-// console.log(newTodos)
-      // console.log(todos[0].items)
-      // let newItems = input
-      // console.log(newItems)
-      
-      // if(todos.title === 'Todo'){
-      //   setTodos(todos => {
-      //     return[...todos, newItems]
-      //   });
-      // }
-  
-      // setInput("")
+    
+      setInput("")
   
     };
 
@@ -95,11 +81,12 @@ console.log(todos)
           })
         }
 
-        <Card todos={todos} />
+        <Todo todos={todos} />
+        <Inprogress todos={todos}/>
+        <Complete todos={todos}/>
 
       </div>
     </div>
-        {/* <Cards newTodos={newTodos} todos={todos} setTodos={setTodos}/> */}
           
         </div>
       </div>
