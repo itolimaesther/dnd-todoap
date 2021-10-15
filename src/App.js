@@ -74,14 +74,14 @@ function App() {
         className="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-5 sm:mb-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
       >
         {
-          todos.map((todo) => {
+          todos.map((todo, idx) => {
             return (
-              <h3>{todo.title}</h3>
+              <h3 key={idx}>{todo.title}</h3>
             )
           })
         }
 
-        <Todo todos={todos} />
+        <Todo todos={todos} newTodos={newTodos} setNewTodos={setNewTodos}/>
         <Inprogress todos={todos}/>
         <Complete todos={todos}/>
 
