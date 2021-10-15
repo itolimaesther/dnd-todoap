@@ -5,6 +5,7 @@ function Inprogress({todos}) {
     let progress = todos[1];
 	// let items = todo.items || [];
 	// console.log(items, "check");
+    // console.log(progress)
 
 
     return (
