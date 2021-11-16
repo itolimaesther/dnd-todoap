@@ -7,7 +7,7 @@
   backdrop-filter: blur(2rem);
 }
 
-.bg-circle {
+/* .bg-circle {
   background: linear-gradient(
     to right bottom,
     rgba(255, 255, 255, 0.5),
@@ -16,9 +16,9 @@
   position: absolute;
   
   z-index: 5;
-}
+} */
 
-.circle1{
+/* .circle1{
   top: 4%;
     left: -1%;
 }
@@ -26,10 +26,22 @@
 .circle2{
   bottom: 30%;
   right: 0%;
-}
+} */
 
 .action-btn{
   font-size: 15px !important;
 }
 
+.checkbox-label{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-self: center;
+}
+
+
+.checkbox{
+  margin-right: 10px;
+}
 
